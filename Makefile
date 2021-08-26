@@ -9,5 +9,22 @@ flake: ## Flake8 every python file
 pylint: ## pylint every python file
 	find . -type f -name "*.py" -a | xargs pylint;
 
-clean: ## Remove pycache
+test: ## Verbosely pytest ./tests/
+	python -m pytest ./tests/ -vv;
+	make clean;
+
+pre-commit: ## Install and autoupdate pre-commit
+	pre-commit install;
+	pre-commit autoupdate;
+
+setup: ## Build package distribution files
+	flit build;
+
+upload: ## Upload package distribution files to pypi
+	flit publish;
+	make clean;
+
+clean: ## Remove package distribution files and pycache
+	rm -rf ./pycraigslist.egg-info ./dist ./build;
 	find . -type d -name "__pycache__" | xargs rm -r;
+	find . -type d -name ".pytest_cache" | xargs rm -r;
