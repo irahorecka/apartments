@@ -1,1 +1,1 @@
-from apartments.url.base import URL
+from apartments.url.url import URL

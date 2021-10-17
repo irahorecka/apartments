@@ -1,5 +1,8 @@
 """
-Base API for apartments.com
+apartments.url.base
+~~~~~~~~~~~~~~~~~~~
+
+Module for parsing URL for apartments.com.
 """
 
 import datefinder
@@ -7,28 +10,9 @@ import datefinder
 from apartments.url.keywords import accepted_keywords, path
 
 
-class URL:
-    domain_base = "https://apartments.com/"
-
-    def __init__(self, *args, **kwargs):
-        self.path = Path(*args, **kwargs)
-        self.params = Param(*args, **kwargs)
-
-    def url(self, new=False):
-        """URL constructor. Takes one keyword argument to specify whether to query for
-        new posts."""
-        if new is not False:
-            new = True
-        return "".join(
-            (
-                self.domain_base,
-                self.path.get_path(is_new=new),
-                self.params.get_params(),
-            )
-        )
-
-
 class BaseParser:
+    """Base URL parser for apartments.com."""
+
     def __init__(self, city="Mountain View", state="CA", filters=None, **kwargs):
         self.city = city
         self.state = state
@@ -79,6 +63,8 @@ class BaseParser:
 
 
 class Path(BaseParser):
+    """URL path parser for apartments.com."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -182,6 +168,8 @@ class Path(BaseParser):
 
 
 class Param(BaseParser):
+    """URL parameter parser for apartments.com."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
